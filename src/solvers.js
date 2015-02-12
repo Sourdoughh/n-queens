@@ -17,25 +17,18 @@ window.findNRooksSolution = function(n) {
   var solution = []; //fixme
   var board = new Board({'n': n});
   var boardState = board.rows();
-  console.log('This is N: ', n)
 
-  // base case:
-  // if there are any row and col conflict
-  // var checkNtoggle = function(){
     for(var rowIndex = 0; rowIndex < boardState.length; rowIndex++){
       for(var j = 0; j < boardState[rowIndex].length; j++){
-        console.log('Running!: ', board.rows())
-        if(!board.hasAnyRowConflicts(boardState[rowIndex][j]) && !board.hasAnyColConflicts(boardState[rowIndex][j])){
-          board.togglePiece(rowIndex, j);
+        board.togglePiece(rowIndex, j);
+        if(board.hasAnyRowConflicts(boardState[rowIndex][j]) || board.hasAnyColConflicts(boardState[rowIndex][j])){
+          board.togglePiece(rowIndex, j);//if above state are true, untoggle.
         }
       }
+      console.log('BOARD.GET(ROWINDEX): ', board.get(rowIndex))
       solution.push(board.get(rowIndex));
     }
-  // }
-
-  // checkNtoggle();
-
-  // console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+  console.log('Solution: ', solution)
   return solution;
 };
 
@@ -44,6 +37,9 @@ window.findNRooksSolution = function(n) {
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
   var solutionCount = undefined; //fixme
+
+  //how do we start at a different index in our first row?
+
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
